@@ -1,0 +1,93 @@
+<div class="container py-4">
+  <a class="btn btn-sm btn-success me-2" routerLink="../add-event" routerLinkActive="active">Add Event</a>
+
+  <div class="form-check form-switch">
+    <!-- Bind the checkbox's checked state to the isCalendarView property -->
+    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" (click)="toggleView()" [checked]="isCalendarView">
+    <label class="form-check-label" for="flexSwitchCheckChecked">
+      <!-- Update the label based on the isCalendarView state -->
+      {{ isCalendarView ? 'Switch to Normal View' : 'Switch to Calendar View' }}
+    </label>
+  </div>
+  
+  
+  <!-- Section Header -->
+  <h3 class="text-center text-primary mb-4">Upcoming Events</h3>
+
+  <!-- Event Cards -->
+  <div *ngIf="!isCalendarView"     @fade
+  >
+     <div *ngFor="let event of events; let i = index" class="card mb-4 shadow-sm" [ngClass]="getEventColor(event.id)">
+    <div class="card-body">
+      <!-- Event Title and Date -->
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h5 class="card-title mb-1 text-dark">{{ event.title }}</h5>
+          <small class="text-muted">{{ event.eventDateTime | date: 'medium' }}</small>
+        </div>
+        <!-- Action Buttons -->
+        <div>
+          <button class="btn btn-sm btn-success me-2"  (click)="openEventModal(event.id,'show')">Show</button>
+<!-- Compare event date with localdate -->
+<a *ngIf="isEventInFuture(event.eventDateTime)" (click)="openEventModal(event.id, 'edit')">Edit</a>
+        
+        </div>
+      </div>
+
+      <!-- Event Description -->
+      <p class="card-text text-secondary">{{ event.description }}</p>
+      <p class="card-text text-secondary">{{ event.type }}</p>
+
+      <!-- Participants -->
+      <div class="participants mt-3">
+        <h6 class="text-muted">Participants:</h6>
+        <div class="row">
+          <!-- Participant Card -->
+          <div
+            *ngFor="
+              let participant of event.participants.slice(
+                0,
+                showMoreParticipants[i] ? event.participants.length : 3
+              )
+            "
+            class="col-6 col-md-4 d-flex flex-column align-items-center mb-3"
+          >
+            <!-- Profile Image -->
+            <div class="profile-image mb-2">
+              <app-imageshow [imagePath]="participant.profilepic" [type]="0"></app-imageshow>
+            </div>              {{participant.profilepic}}
+
+            <p class="text-center small text-secondary">{{ participant.email }}</p>
+          </div>
+        </div>
+
+        <!-- Show More Button -->
+        <button
+          *ngIf="event.participants.length > 3"
+          class="btn btn-link text-primary p-0"
+          (click)="toggleShowMore(i)"
+        >
+          {{ showMoreParticipants[i] ? 'Show Less' : 'Show More' }}
+        </button>
+      </div>
+    </div>
+    <button
+    class="btn btn-primary"
+    (click)="openEventModal(event.id,'show')"
+  >
+    View Details
+  </button>   <!-- Button to open the modal -->
+    
+  </div>
+ </div>
+
+  <app-calendar-view *ngIf="isCalendarView"     @fade
+  ></app-calendar-view>
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2 text-muted">Loading data, please wait...</p>
+  </div>
+</div>
+<app-get-event (modalClose)="onModalClose($event)"
+ ></app-get-event >

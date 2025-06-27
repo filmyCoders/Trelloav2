@@ -1,0 +1,83 @@
+<!-- <button class="btn btn-success mb-3" (click)="openAddWorkspaceModal()">Open Workspace Members</button> -->
+
+<div class="modal fade pl-modal" tabindex="-1" aria-labelledby="workspaceMemberModalLabel" aria-hidden="true" #showWorkspaceMemberModel data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Workspace Members</h4>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="">
+          <h5 class="mb-0"><i class="bi bi-person-plus"></i> Add Member</h5>
+        </div>
+
+        <form [formGroup]="addworkspaceForm">
+
+          <!-- Search User -->
+          <div class="search-container" [class.isLoading]="isLoading">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Search users..." 
+              formControlName="userName"
+              (keyup)="searchUsers($event)" 
+            />
+            
+            <div *ngIf="isLoading" class="loading-spinner">
+              <span>Loading...</span>
+            </div>
+            
+            <ul class="user-list" *ngIf="pagedResponse?.items?.length">
+              <li *ngFor="let user of pagedResponse.items" class="user-item" (click)="selectUser(user)">
+                <app-imageshow class="profile-img" [imagePath]="user.profileImageUrl" [type]="0"></app-imageshow>
+                <div class="user-details">
+                  <span>{{ user.firstName }} {{ user.lastName }}</span>
+                  <span>{{ user.email }}</span>
+                </div>
+              </li>
+            </ul>
+            <p *ngIf="!isLoading && !pagedResponse?.items?.length &&messageFlag" class="no-results">
+              No matching users found.
+            </p>
+          </div>
+            
+          <div class="mb-3">
+            <label for="workspaceRole" class="form-label">Role</label>
+            <select aria-label="Author" formControlName="role" class="form-select">
+              <option [ngValue]="null" disabled selected>Select a Role</option> <!-- Placeholder option -->
+              <option *ngFor="let role of workspaceRoles" [value]="role">{{ role }}</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-primary" [disabled]="addworkspaceForm.invalid" (click)="saveWorkspace()">Add Member</button>
+        </form>
+
+        <hr />
+
+        <h5>Current Members</h5>
+        <ul class="list-group">
+          <li *ngFor="let member of getMembers" class="list-group-item d-flex justify-content-between align-items-center">
+           <p>{{ member.email }} </p>
+            <div *ngIf="member.role!=workspaceRole">
+              <select  class="form-select form-select-sm d-inline w-auto"
+                      [(ngModel)]="member.role"
+                      (change)="updateRole(member)">
+                <option *ngFor="let role of workspaceRoles" [value]="role">
+                  {{ role }}
+                </option>
+              </select>
+
+              <button *ngIf="!member.isDeleted" class="btn btn-danger btn-sm ms-2" (click)="deleteMember(member)">Remove</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

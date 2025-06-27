@@ -1,0 +1,114 @@
+ {
+    "auth": {
+      "login": {
+        "FORM_TITLE": "Login",
+        "USERNAME_PLACEHOLDER": "Enter your username",
+        "PASSWORD_PLACEHOLDER": "Enter your password",
+        "LOGIN_BUTTON": "Login",
+        "FORGOT_PASSWORD_LINK": "Forgot your password?",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required.",
+          "INVALID_CREDENTIALS": "Invalid username or password."
+        }
+      },
+      "register": {
+        "FORM_TITLE": "Register",
+        "USERNAME_PLACEHOLDER": "Enter your username",
+        "PASSWORD_PLACEHOLDER": "Enter your password",
+        "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your password",
+        "REGISTER_BUTTON": "Register",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required.",
+          "PASSWORD_MISMATCH": "Passwords do not match."
+        }
+      },
+      "forgotPassword": {
+        "FORM_TITLE": "Forgot Password",
+        "EMAIL_PLACEHOLDER": "Enter your email",
+        "SEND_BUTTON": "Send Reset Link",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required.",
+          "EMAIL_NOT_FOUND": "Email not found."
+        }
+      },
+      "resetPassword": {
+        "FORM_TITLE": "Reset Password",
+        "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
+        "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
+        "RESET_BUTTON": "Reset Password",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required.",
+          "PASSWORD_MISMATCH": "Passwords do not match."
+        }
+      }
+    },
+    "user": {
+      "profile": {
+        "FORM_TITLE": "Profile",
+        "USERNAME_LABEL": "Username",
+        "EMAIL_LABEL": "Email",
+        "UPDATE_BUTTON": "Update",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required."
+        }
+      },
+      "settings": {
+        "FORM_TITLE": "Settings",
+        "CHANGE_PASSWORD_BUTTON": "Change Password",
+        "CHANGE_EMAIL_BUTTON": "Change Email",
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required."
+        }
+      }
+    },
+    "product": {
+      "list": {
+        "PAGE_TITLE": "Products",
+        "ADD_PRODUCT_BUTTON": "Add Product",
+        "UPDATE_PRODUCT_BUTTON": "Update Product",
+        "DELETE_PRODUCT_BUTTON": "Delete Product",
+        "ERROR_MESSAGES": {
+          "FETCH_FAILED": "Failed to fetch products.",
+          "ADD_FAILED": "Failed to add product.",
+          "UPDATE_FAILED": "Failed to update product.",
+          "DELETE_FAILED": "Failed to delete product."
+        }
+      },
+      "details": {
+        "PAGE_TITLE": "Product Details",
+        "ADD_TO_CART_BUTTON": "Add to Cart",
+        "BUY_NOW_BUTTON": "Buy Now",
+        "ERROR_MESSAGES": {
+          "FETCH_FAILED": "Failed to fetch product details."
+        }
+      }
+    },
+    "cart": {
+      "PAGE_TITLE": "Shopping Cart",
+      "CHECKOUT_BUTTON": "Checkout",
+      "REMOVE_ITEM_BUTTON": "Remove",
+      "ERROR_MESSAGES": {
+        "ADD_FAILED": "Failed to add item to cart.",
+        "REMOVE_FAILED": "Failed to remove item from cart.",
+        "CHECKOUT_FAILED": "Failed to complete checkout."
+      }
+    },
+    "shared": {
+      "common": {
+        "BUTTONS": {
+          "SAVE": "Save",
+          "CANCEL": "Cancel",
+          "DELETE": "Delete"
+        },
+        "ERROR_MESSAGES": {
+          "REQUIRED": "This field is required.",
+          "INVALID_FORMAT": "Invalid format."
+        }
+      },
+      "messages": {
+        "SUCCESS": "Operation completed successfully.",
+        "ERROR": "An error occurred. Please try again."
+      }
+    }
+  }
+  

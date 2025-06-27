@@ -1,0 +1,193 @@
+<!--Menu Hirarchy-->
+<div class="page-breadcrumb">
+  <ul>
+      <li>
+          <a href="users.html">Roles</a>
+      </li>
+      <li class="breadcrumb-seprator">
+          <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.32742 5.32757C7.65286 5.00214 8.1805 5.00214 8.50593 5.32757L13.0893 9.91091C13.4147 10.2363 13.4147 10.764 13.0893 11.0894L8.50593 15.6728C8.1805 15.9982 7.65286 15.9982 7.32742 15.6728C7.00198 15.3473 7.00198 14.8197 7.32742 14.4942L11.3215 10.5002L7.32742 6.50609C7.00198 6.18065 7.00198 5.65301 7.32742 5.32757Z" fill="#A6ACC4"></path>
+              </svg>
+      </li>
+      
+  </ul>
+</div>
+  <div class="container my-4">
+    
+    <!-- Record Controls -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="record-controls">
+<button class="btn btn-primary" (click)="openAddRoleModal()">Add Role</button>     
+    </div>
+  </div>
+    <!-- Records Per Page Controls -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="record-controls">
+        <label for="records-per-page" class="me-2">Show</label>
+        <select id="records-per-page" class="form-select d-inline-block w-auto me-2" (change)="onRecordsPerPageChange($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <span>records per page</span>
+      </div>
+  
+      <!-- Search Field -->
+      <div class="search-bar">
+        <input 
+        class="form-control"
+        type="text" 
+        placeholder="Search..." 
+        id="searchInput" 
+        (keyup)="onSearch($event)">    
+      </div>
+    </div>
+  
+    <!-- Table -->
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-hover table-bordered table-striped">
+          <thead class="bg-dark text-light">
+            <tr>              
+              <th scope="col" (click)="sort('name')" style="cursor: pointer;">
+                Role Name <i class="fas fa-sort" title="Sort"></i>
+              </th>
+             
+              <th >
+                Action <i class="fas fa-sort" title="Sort"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Loader -->
+  
+  
+            <tr *ngFor="let role of roles; let i = index">
+                <td>{{ role.name }}</td>
+                
+                <td class="d-flex align-items-center gap-2">
+                    <button 
+                        [disabled]="role.name === 'SuperAdmin' || role.name === 'Admin'"                         (click)="openUpdateRoleModal(role.id)" 
+                        class="btn btn-primary" 
+                        title="Edit Role">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    
+                    <button 
+                        [disabled]="role.name === 'SuperAdmin' || role.name === 'Admin'" 
+                        (click)="openDeleteRoleModal(role.id, role.name)" 
+                        class="btn btn-danger" 
+                        title="Delete Role">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+                <tr *ngIf="roles.length === 0">
+              <td colspan="4" class="text-center">No users found</td>
+            </tr>
+          </tbody>
+        </table>
+        <app-admin-loader [isLoading]="isLoading&&roles.length>0"></app-admin-loader>
+
+      </div>
+    </div>
+  
+    <div class="record-count-container">
+      <span id="recordCountBtn">Total Records: {{ pagedResponse.totalCount }}</span>
+    </div>
+    
+    <!-- Pagination Controls -->
+    <div class="pagination justify-content-center my-4">
+      <button class="page-link" [disabled]="currentPage === 1" (click)="onPreviousPage()">Previous</button>
+      
+      <button *ngFor="let page of totalPages" 
+              class="btn page-link" 
+              [ngClass]="{'active': currentPage === page}" 
+              (click)="onPageChange(page)">
+        {{ page }}
+      </button>
+      
+      <button class="page-link" [disabled]="currentPage === pagedResponse.totalPages" (click)="onNextPage()">Next</button>
+    </div>
+  </div>
+  
+  
+ 
+  <!-- Modal -->
+<div class="modal fade pl-modal" #addRoleModal tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addRoleModalLabel">Add Role</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Modal Content -->
+          <form [formGroup]="createRoleForm"  >
+            <div class="mb-3">
+              <label for="roleName" class="form-label">Role Name</label>
+              <input type="text" class="form-control" id="roleName" formControlName="name">
+              <div *ngIf="createRoleForm.get('name')?.invalid && createRoleForm.get('name')?.touched" class="text-danger">
+                Role name is required and must contain only alphanumeric characters or underscores.
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="createRoleForm.invalid" (click)="saveRole()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+   <!-- Modal -->
+<div class="modal fade pl-modal" #updateRoleModal tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addRoleModalLabel">Edit Role</h5>
+          <button type="button" class="btn-close" (click)="closeupdateModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Modal Content -->
+          <form [formGroup]="createRoleForm"  >
+            <div class="mb-3">
+              <label for="roleName" class="form-label">Role Name</label>
+              <input type="text" class="form-control" id="roleName" formControlName="name">
+              <div *ngIf="createRoleForm.get('name')?.invalid && createRoleForm.get('name')?.touched" class="text-danger">
+                Role name is required and must contain only alphanumeric characters or underscores.
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeupdateModal()">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="createRoleForm.invalid" (click)="editRole()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+ <!-- Delete Confirmation Modal -->
+<div class="modal fade pl-modal" #deleteRoleModal tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteRoleModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" (click)="closeDeleteModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the role "<strong>{{ roleName }}</strong>"? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteSubmit()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

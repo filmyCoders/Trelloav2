@@ -1,0 +1,131 @@
+
+
+
+
+
+<div appBackgroundImage [imageName]="workspace.workspaceImage" [directoryType]="1" class="background-container">
+  <div class="content">
+    <div class="board-header">
+      <div class="blurred-background">
+        {{ workspace.boardName }}
+      </div>
+
+       <!-- Add Member Button -->
+  <button class="btn btn-show-members" (click)="openWorkspaceMember()">
+    <i class="fas fa-users"></i> Show Members
+  </button>
+    </div>
+    
+
+    <!-- Task Board Section -->
+    <!-- Main Board -->
+    <div cdkDropListGroup>
+
+      <div class="board" cdkDropList [cdkDropListConnectedTo]="connectedDropLists" [cdkDropListData]="tasklists"
+        cdkDropListOrientation="horizontal" (cdkDropListDropped)="onTaskListDrop($event)">
+        <div class="list" *ngFor="let taskList of tasklists; let colIndex = index" cdkDrag [cdkDragData]="taskList">
+
+          <!-- Column Header -->
+          <div class="list-header" cdkDragPreview>
+            <h3>{{ taskList.listName }}</h3>
+            <button class=" btn-danger btn-sm ms-1" (click)="deleteList(taskList)"> <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <!-- Cards Container (Drop Zone for Cards) -->
+          <div class="card-container" cdkDropList [cdkDropListData]="taskList.cards"
+            [cdkDropListConnectedTo]="connectedCardDropLists" [id]="taskList.listId"
+            (cdkDropListDropped)="onTaskCardDrop1d($event)">
+            <!-- Show this only if the list has no tasks -->
+            <div *ngIf="taskList.cards.length === 0" class="empty-list-placeholder">
+              No tasks yet. Drag a task here or
+            </div>
+
+            <!-- Task Cards (Draggable Items) -->
+            <div class="card" *ngFor="let card of taskList.cards; let taskIndex = index" cdkDrag [cdkDragData]="card">
+
+              <!-- Static Image -->
+              <div  class="card-image mb-2">
+                <img [src]="'https://media.istockphoto.com/id/2157779124/photo/beautiful-view-in-the-month-of-june-pahalgam-kashmir-india-paragliding-over-the-hills-of.jpg?s=1024x1024&w=is&k=20&c=QUNH1F_7tCAmYlkfQ9CQtMffVKdEsfClga20yiSp8y8='" alt="Task Image" />
+              </div>
+
+              <!-- Task Name -->
+              <div class="card-content">
+                {{ card.title }}
+              </div>
+              {{ card.createdAt | date }}
+
+              <div class="card-actions mt-2">
+                <button class="btn btn-primary" title="View Details">
+                  <i class="fas fa-info-circle"></i>
+                </button>
+                <button class="btn btn-danger"  title="Delete Task" (click)="deleteTaskCard(card.taskCardId)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Task Button -->
+          <button *ngIf="!showCardInput[colIndex]" class="btn btn-sm btn-add-task" (click)="toggleAddCard(colIndex)">+
+            Card</button>
+
+          <!-- Input Box for Adding a Task Card -->
+          <div *ngIf="showCardInput[colIndex]" class="add-list-input">
+            <input type="text" [formControl]="addTaskCardForm.controls['title']" placeholder="Enter task title"
+              class="form-control" />
+            <button class="btn btn-primary" (click)="saveTaskCard(taskList,colIndex)">Add</button>
+            <button class="btn-close" (click)="toggleAddCard(colIndex)"></button>
+          </div>
+
+        </div>
+
+        <!-- Add List Section -->
+        <div class="add-list">
+          <button *ngIf="!showListInput" class="btn btn-sm btn-add-task" (click)="toggleAddList()">+ Add List</button>
+
+          <div *ngIf="showListInput" class="add-list-input">
+            <input type="text" [formControl]="addTasklistForm.controls['taskListName']" placeholder="Enter list name"
+              class="form-control" />
+            <button class="btn btn-primary" (click)="saveTaskList()">Add</button>
+            <button class="btn-close" (click)="toggleAddList()"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="collaboration-area">
+
+
+<div class="collaboration-section">
+  <h3>Collaborative Users</h3>
+
+</div>
+
+
+<app-workspace-member></app-workspace-member>
+
+<div class="chat-container">
+  <div class="messages">
+    <div *ngFor="let msg of messages" class="message">
+      <strong>{{ msg.user }}:</strong> {{ msg.message }}
+    </div>
+  </div>
+  <div class="input-area">
+    <input [(ngModel)]="user" placeholder="User" />
+    <input [(ngModel)]="message" placeholder="Message" />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- collaboration.component.html -->
+  <!-- Your collaboration content here -->
+</div>
+<div class="mouse-tracker-container">
+  <div
+    *ngFor="let position of mousePositions"
+    class="mouse-pointer"
+    [ngStyle]="{ left: position.x + 'px', top: position.y + 'px' }"
+  > {{position.userId}}</div>
+</div>

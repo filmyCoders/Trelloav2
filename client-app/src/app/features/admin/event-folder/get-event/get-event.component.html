@@ -1,0 +1,182 @@
+<!-------------------------------Show Event Model-------------------------------->
+
+
+<div class="modal fade pl-modal" #eventdata tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalLabel">
+          <p [style.color]="getEventTypeColor(selectedEvent?.type)"> {{ eventType }}</p>
+
+        </h3>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModel('show')"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p *ngIf="isLoading">Loading event details...</p>
+        <ng-container *ngIf="!isLoading">
+          <p><strong>Title:</strong>{{ selectedEvent?.title || 'Event Details' }}</p>
+
+          <p><strong>Description:</strong> {{ selectedEvent?.description }}</p>
+          <p> {{ formatDateTime(selectedEvent?.eventDateTime) }}</p>
+
+          <!-- Participants -->
+          <div class="participants mt-3">
+            <h6 class="text-muted">Participants:</h6>
+            <div class="row">
+              <!-- Participant Card -->
+              <div *ngFor="let participant of selectedEvent?.participants"
+                class="col-6 col-md-4 d-flex flex-column align-items-center mb-3">
+                <!-- Profile Image -->
+                <div class="profile-image mb-2">
+                  <app-imageshow [imagePath]="participant.profilepic"></app-imageshow>
+                </div>
+                <p class="text-center small text-secondary">{{ participant.email }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+  
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------End Show Event Model-------------------------------->
+
+<!-------------------------------Show Event Model-------------------------------->
+
+
+<div class="modal fade pl-modal" #editEvent tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalLabel">
+          <p [style.color]="getEventTypeColor(selectedEvent?.type)"> {{ eventType }}</p>
+
+        </h3>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModel('edit')"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p *ngIf="isLoading">Loading event details...</p>
+      </div>
+      <form [formGroup]="editForm">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="title" formControlName="title" type="text" />
+        
+
+        </div>
+        <div *ngIf="editForm.get('title')?.invalid && editForm.get('title')?.touched">
+          <app-validation-message [validationMessage]="'Title is required.'"
+              [showValidationMessage]="editForm.get('title')?.errors?.['required']">
+          </app-validation-message>
+      </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" formControlName="description"></textarea>
+        </div>
+        <div *ngIf="editForm.get('description')?.invalid && editForm.get('description')?.touched">
+          <app-validation-message [validationMessage]="'Description is required.'"
+              [showValidationMessage]="editForm.get('description')?.errors?.['required']">
+          </app-validation-message>
+      </div>
+
+        <div class="form-group">
+          <label for="eventDateTime">Event Date & Time </label>
+          <input id="eventDateTime" formControlName="eventDateTime" value="" type="datetime-local" />
+        </div>
+        <div *ngIf="editForm.get('eventDateTime')?.invalid && editForm.get('eventDateTime')?.touched">
+          <!-- Required error message -->
+          <app-validation-message 
+            [validationMessage]="'Date and Time is required.'"
+            [showValidationMessage]="editForm.get('eventDateTime')?.errors?.['required']">
+          </app-validation-message>
+        
+          <!-- Custom future date validation error message -->
+          <app-validation-message 
+            [validationMessage]="'Event date and time must be in the future.'"
+            [showValidationMessage]="editForm.get('eventDateTime')?.errors?.['futureDate']">
+          </app-validation-message>
+      </div>
+              
+        <div class="form-group">
+          <label for="eventType">Event Type</label>
+          <select id="eventType" formControlName="EventType">
+            <option *ngFor="let type of EVENTTYPE" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get('EventType')?.invalid && editForm.get('EventType')?.touched">
+          <app-validation-message [validationMessage]="'Event Type is required.'"
+              [showValidationMessage]="editForm.get('EventType')?.errors?.['required']">
+          </app-validation-message>
+      </div>
+        <div formArrayName="participants">
+          <div *ngFor="let participant of participants.controls; let i = index" [formGroupName]="i">
+            <!-- Profile Image -->
+            <div class="profile-image mb-2">
+                <app-imageshow [imagePath]="profilePicArray[i] " [type]="0"></app-imageshow>
+                          </div>
+            <label>Email</label>
+            <input formControlName="email" type="email" class="form-control"                             (keyup)="fetchUserDetails($event, i)"
+            />
+                 <!-- Validation and Error Messages -->
+                 <div *ngIf="errorMessages[i]" class="text-danger mt-1">
+                  <app-validation-message
+                      [validationMessage]="'Email does not exist.'"
+                      [showValidationMessage]="errorMessages[i] === true"
+                  ></app-validation-message>
+              </div>
+              <div *ngIf="participant.get('email')?.invalid && participant.get('email')?.touched">
+                  <app-validation-message
+                      [validationMessage]="'Email is required.'"
+                      [showValidationMessage]="participant.get('email')?.errors?.['required']"
+                  ></app-validation-message>
+                  <app-validation-message
+                      [validationMessage]="'Invalid email format.'"
+                      [showValidationMessage]="participant.get('email')?.errors?.['pattern']"
+                  ></app-validation-message>
+              </div>
+         
+              <div *ngIf="userExistError">
+                <app-validation-message
+                    [validationMessage]="'This Participant Already Present this Event'"
+                    [showValidationMessage]="userExistError"
+                ></app-validation-message>
+              </div>
+   
+            <!-- Action Buttons -->
+            <div class="col-lg-2 col-md-2 col-sm-6 d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-danger btn-sm me-2" (click)="removeParticipant(i)">Remove</button>
+            </div>
+
+
+          </div>
+          <!-- Add Participant Button -->
+          <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-start">
+              <button type="button" class="btn btn-primary btn-sm" (click)="addParticipant()">
+                <i class="bi bi-person-plus"></i> Add Participant
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" (click)="checkEvent()" class="btn btn-success">Save</button>
+      </form>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------End Show Event Model-------------------------------->

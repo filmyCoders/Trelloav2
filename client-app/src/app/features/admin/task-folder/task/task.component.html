@@ -1,0 +1,57 @@
+<div class="board">
+  <!-- Loop through columns -->
+  <div
+    class="list"
+    *ngFor="let column of columns; let colIndex = index"
+    cdkDropList
+    [cdkDropListData]="column.tasks"
+    [cdkDropListConnectedTo]="connectedDropLists"
+    (cdkDropListDropped)="onTaskDrop($event)"
+  >
+    <!-- Column Header -->
+    <div class="list-header">
+      <h3>{{ column.title }}</h3>
+      <button class="btn btn-sm btn-add-task" (click)="addTask(colIndex)">
+        + Add Task
+      </button>
+    </div>
+
+    <!-- Task Cards -->
+    <div
+      class="card"
+      *ngFor="let task of column.tasks; let taskIndex = index" cdk-scrollable
+      cdkDrag
+    >
+      <!-- Static Image -->
+      <div *ngIf="task.image" class="card-image mb-2">
+        <img [src]="task.image" alt="Task Image" />
+      </div>
+
+      <!-- Task Name -->
+      <div class="card-content">
+        {{ task.name }}
+      </div>
+
+      <div class="card-actions mt-2">
+        <!-- Details Button -->
+        <button
+          class="btn btn-primary"
+          (click)="viewDetails(task)"
+          title="View Details"
+        >
+          <i class="fas fa-info-circle"></i>
+        </button>
+      
+        <!-- Delete Button -->
+        <button
+          class="btn btn-danger"
+          (click)="deleteTask(colIndex, taskIndex)"
+          title="Delete Task"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+        </div>
+  </div>
+</div>
+<app-workspace> </app-workspace>

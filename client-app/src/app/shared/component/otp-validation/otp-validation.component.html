@@ -1,0 +1,84 @@
+<div [formGroup]="otpValidationForm" class="otp-form-container">
+  <div  class="countdown-timer" *ngIf="countdown>0" >
+    <p style="color: green;">OTP Re-Send in: {{ formattedCountdown }}</p>
+  </div>
+  <a class="btn btn-link" *ngIf="countdown == 0" (click)="resendOtpCall()">Re-Send Otp</a>
+<br>
+  <label for="newPassword" class="form-label">OTP</label>
+
+  <div class="otp-inputs">
+
+       <ng-container *ngFor="let controlName of getOtpControls(); let i = index">
+        
+      <input
+        #otpInput
+        type="text"
+        maxlength="1"
+        [formControlName]="controlName"
+        placeholder="_"
+        class="otp-input"
+        (input)="onInputChange($event, i)"
+        (keydown)="onBackspace($event, i)"
+      />
+
+     </ng-container>
+    <!-- Validation Message for Incomplete or Invalid OTP -->
+  
+ </div>
+ <div *ngIf="otpvalid==false" class="validation-error">
+  <app-validation-message
+    [validationMessage]="'Please enter the complete OTP.'" [showValidationMessage]="true"
+  ></app-validation-message>
+</div>
+
+
+
+
+  <div *ngIf="validationType === 'resetPassword'" >
+    
+      <!-- New Password -->
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">New Password</label>
+        <div class="input-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            formControlName="newPassword"
+          />
+          <button type="button" class="btn btn-primary" appTogglePassword>
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+       <div *ngIf="otpValidationForm.get('newPassword')?.invalid && otpValidationForm.get('newPassword')?.touched" class="text-danger">
+          
+        <app-validation-message [validationMessage]="'New password is required.
+        '" [showValidationMessage]="otpValidationForm.get('newPassword')?.errors?.['required']">
+       </app-validation-message>
+        <div *ngIf="otpValidationForm.get('newPassword')?.invalid && otpValidationForm.get('newPassword')?.touched" class="text-danger">
+          <app-validation-message [validationMessage]="'Password must contain at least one letter, one number, and one special character.
+         '" [showValidationMessage]="otpValidationForm.get('newPassword')?.errors?.['pattern']">
+        </app-validation-message>
+        </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  <div *ngIf="validationType === 'changeEmail'" class="field">
+    <label>New Email</label>
+    <input type="email" formControlName="newEmail" placeholder="Enter new email" class="form-control" />
+  </div>
+
+  <div *ngIf="validationType === 'orderConfirmation'" class="field">
+    <label>Order ID</label>
+    <input type="text" formControlName="orderId" placeholder="Enter order ID" class="form-input" />
+  </div>
+
+
+
+  <button (click)="onSubmit()"  class="btn-submit">
+    Verify Otp
+  </button>
+</div>

@@ -1,0 +1,54 @@
+.errors {
+    display: block;
+    color: red;
+    margin-top: 5px;
+    font-size: 1em; /* Adjust font size for responsiveness */
+  }
+  
+  .error {
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 5px;
+  }
+  
+  .error-icon {
+    margin-left: 1rem; /* Adjust spacing to the left of the icon */
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 768px) {
+    .errors {
+      font-size: 0.9em; /* Slightly smaller font size on tablets */
+    }
+  
+    .error {
+      padding: 8px; /* Slightly reduce padding on tablets */
+      border-radius: 4px;
+    }
+  
+    .error-icon {
+      margin-left: 0.75rem; /* Adjust icon spacing on tablets */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .errors {
+      font-size: 0.8em; /* Smaller font size on mobile devices */
+    }
+  
+    .error {
+      padding: 6px; /* Further reduce padding on mobile devices */
+      border-radius: 3px;
+    }
+  
+    .error-icon {
+      margin-left: 0.5rem; /* Adjust icon spacing on mobile devices */
+    }
+  }
+  

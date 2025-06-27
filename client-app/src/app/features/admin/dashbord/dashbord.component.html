@@ -1,0 +1,146 @@
+  <!-- Dashboard Content -->
+  <div class="dashboard-content flex-grow-1 p-4">
+    
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h3>Total Sales</h3>
+                <h2>$65,024</h2>
+                <div class="text-success">+81%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h3>Site Visit</h3>
+                <h2>24,981</h2>
+                <div class="text-danger">-48%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h3>Searches</h3>
+                <h2>14,147</h2>
+                <div class="text-success">+21%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h3>Searches</h3>
+                <h2>14,147</h2>
+                <div class="text-success">+21%</div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-4">New Users</h4>
+    <div class="row">
+        <div class="col-md-4 user-card">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User">
+            <div>
+                <strong>Jack</strong><br>
+                <small>54 Min Ago</small>
+            </div>
+        </div>
+        <div class="col-md-4 user-card">
+            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User">
+            <div>
+                <strong>Amir</strong><br>
+                <small>3 Hours Ago</small>
+            </div>
+        </div>
+        <div class="col-md-4 user-card">
+            <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="User">
+            <div>
+                <strong>Ember</strong><br>
+                <small>6 Hours Ago</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="user-card">
+                <div class="bg-light p-2 rounded text-center">
+                    <strong>+</strong><br>
+                    <span>More</span><br>
+                    <small>New User</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Recent Orders</h4>
+    <table class="table table-striped recent-orders">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Number</th>
+                <th>Payment</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>JavaScript Tutorial</td>
+                <td>85743</td>
+                <td>Due</td>
+                <td class="text-warning">Pending</td>
+            </tr>
+            <tr>
+                <td>CSS Full Course</td>
+                <td>97245</td>
+                <td>Refunded</td>
+                <td class="text-danger">Declined</td>
+            </tr>
+            <tr>
+                <td>Flex-Box Tutorial</td>
+                <td>36452</td>
+                <td>Paid</td>
+                <td class="text-success">Active</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="mt-4">Reminders</h4>
+    <div class="reminder">
+        <strong>Workshop</strong><br>
+        <small>08:00 AM - 12:00 PM</small>
+    </div>
+    <div class="reminder">
+        <strong>Workshop</strong><br>
+        <small>08:00 AM - 12:00 PM</small>
+    </div>
+    <div class="reminder text-center">
+        <button class="btn btn-primary">Add Reminder</button>
+    </div>
+
+
+     <!-- Add User Form -->
+     <div class="card p-4 mt-4">
+        <h3 class="mb-4">User Information</h3>
+        <form>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role">
+                    <option>Admin</option>
+                    <option>User</option>
+                    <option>Moderator</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+</div>

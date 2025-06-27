@@ -1,0 +1,31 @@
+<!-- <div class="container-fluid calendar-container"  *ngIf="isLoading==false";
+>
+  <div class="row justify-content-center">
+    <div class="" >
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</div> -->
+
+<app-admin-loader [isLoading]="isLoading"></app-admin-loader>
+
+<!-- <full-calendar [options]="calendarOptions">
+  <ng-template #eventContent let-arg>
+    <b>{{arg.timeText}}</b>
+    <i>{{arg.event.title}}</i>
+    <p>{{arg.event.type}}</p>
+    <p>{{arg.event.eventDateTime}}</p>
+
+  </ng-template>
+</full-calendar> -->
+<app-get-event 
+ ></app-get-event ><full-calendar [options]="calendarOptions">
+  <ng-template #eventContent let-arg>
+    <div class="custom-event">
+      <span class="event-dot" [style.backgroundColor]="getEventTypeColor(arg.event.extendedProps.type)"></span>
+      <span class="event-title" (click)="openEventModal(arg.event.id)">
+        {{ arg.event.title }}
+      </span>
+    </div>
+  </ng-template>
+</full-calendar>

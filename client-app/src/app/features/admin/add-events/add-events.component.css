@@ -1,0 +1,26 @@
+form {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  div {
+    margin-bottom: 15px;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
+  
+
+  .img-thumbnail {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  

@@ -1,0 +1,142 @@
+
+
+
+  <div class="details-box" *ngIf="!isLoading &&user">
+    <div class="mb-2 text-center " >
+      <h3 class="mb-4 active" >Details</h3>
+
+      <img [src]="user.profileImageUrl" alt="Profile Image" class="profile-pic mb-3" />
+    
+
+  <p><b>Name</b> {{user.firstName }} {{user.middleName}} {{user.lastName}}</p>
+    <p><b>Email </b> {{user.email}}</p>
+    <p><b>Mobile No</b> {{user.mobileNo}}</p>
+  </div>
+   
+    <a (click)="openEditUserModal()" class="theme-btn themebtn-secondary edit-profile" data-bs-toggle="modal"
+      data-bs-target="#edit-contributor-modal">
+      <svg width="20" height="20" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M13.5947 8.4044L12.4162 7.22589L5.2095 14.4326L4.64298 16.1776L6.38802 15.6111L13.5947 8.4044ZM7.28344 17.0727L2.04834 18.7723L3.7479 13.5372L12.4162 4.86886L15.9518 8.4044L7.28344 17.0727Z"
+          fill="#1E202C" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M17.1303 2.51184C16.4794 1.86096 15.4242 1.86096 14.7733 2.51184L13.5948 3.69035L17.1303 7.22588L18.3088 6.04737C18.9597 5.3965 18.9597 4.34122 18.3088 3.69035L17.1303 2.51184Z"
+          fill="#1E202C" />
+      </svg>
+    </a>
+  </div>
+
+ 
+  <app-admin-loader [isLoading]="isLoading"></app-admin-loader>
+
+
+
+<!-- Modal -->
+<div class="modal fade pl-modal" #editprofile tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Profile</h5>
+
+        <button type="button" class="btn-close" (click)="closeupdateModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="profile-pic-container" >
+          
+          <img [src]="profileImagePreview  " alt="Profile Picture" class="" />
+          <div class="overlay">
+            <div class="icon">📷</div>
+            <div>Change Image</div>
+          </div>
+          <input type="file" (change)="onImageSelected($event)" accept="image/*" />
+        </div>
+        
+        
+          <!-- Profile Image Upload Section -->
+
+          <!-- <div class="mb-4 text-center  " >
+
+            
+            <img [src]="profileImagePreview " alt="Profile Picture" class="profile-pic center  mb-4" />
+            <label class="-label" for="file">
+              <span class="glyphicon glyphicon-camera"></span>
+              <span>Change Image</span>
+              <input type="file" (change)="onImageSelected($event)" accept="image/*" />
+
+            </label>
+
+                                            
+          </div> -->
+        <!-- Modal Content -->
+        <form [formGroup]="editForm">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+
+            <div *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched">
+
+              <app-validation-message [validationMessage]="'First name is
+                required.'" [showValidationMessage]="editForm.get('firstName')?.errors?.['required']">
+              </app-validation-message>
+
+              <app-validation-message [validationMessage]="'First Name must contain only alphabetical characters.
+
+                allowed.'" [showValidationMessage]="editForm.get('firstName')?.errors?.['pattern']">
+              </app-validation-message>
+            </div>
+
+            <div *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched" class="text-danger">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="middleName" class="form-label">Middle Name</label>
+            <input type="text" class="form-control" id="middleName" formControlName="middleName">
+            <div *ngIf="editForm.get('middleName')?.invalid && editForm.get('middleName')?.touched" class="text-danger">
+              <app-validation-message [validationMessage]="'Middle name can only contain alphabetical characters.
+             '" [showValidationMessage]="editForm.get('middleName')?.errors?.['pattern']"></app-validation-message>
+
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+
+            <div *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched">
+
+              <app-validation-message [validationMessage]="'Last Name name is
+                required.'" [showValidationMessage]="editForm.get('lastName')?.errors?.['required']">
+              </app-validation-message>
+
+              <app-validation-message [validationMessage]="'Last Name Name must contain only alphabetical characters.
+
+                allowed.'" [showValidationMessage]="editForm.get('lastName')?.errors?.['pattern']">
+              </app-validation-message>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mobileNo" class="form-label">Mobile No</label>
+            <input type="text" class="form-control" id="mobileNo" formControlName="mobileNo"
+              (input)="onMobileNoInput($event)">
+
+            <div *ngIf="editForm.get('mobileNo')?.invalid && editForm.get('mobileNo')?.touched">
+              <app-validation-message [validationMessage]="'Mobile No is
+                  required.'" [showValidationMessage]="editForm.get('mobileNo')?.errors?.['required']">
+              </app-validation-message>
+              <app-validation-message [validationMessage]="'Mobile number must be exactly 10 digits.'"
+                [showValidationMessage]="editForm.get('mobileNo')?.errors?.['invalidMobileNumber']">
+              </app-validation-message>
+
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeupdateModal()">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="editForm.invalid"
+          (click)="editProfile()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

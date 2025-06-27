@@ -1,0 +1,48 @@
+.card {
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.participants h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-link {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+/* Highlight the last updated event */
+.highlighted {
+  background-color: #f0f8ff; /* Light blue background for the last updated item */
+  border-left: 5px solid #007bff; /* Add a blue border to highlight */
+}
+.workspace-image app-imageshow img {
+  width: 100%;
+  height: auto;
+}

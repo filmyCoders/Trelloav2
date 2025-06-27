@@ -1,0 +1,130 @@
+<div class="container">
+    <h2>Add Event</h2>
+
+    <form [formGroup]="eventForm" (ngSubmit)="checkEvent()">
+        <!-- Event Title -->
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" formControlName="title" class="form-control" />
+        </div>
+        <div *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
+            <app-validation-message [validationMessage]="'Title is required.'"
+                [showValidationMessage]="eventForm.get('title')?.errors?.['required']">
+            </app-validation-message>
+        </div>
+
+        <!-- Event Description -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
+        </div>
+        <div *ngIf="eventForm.get('description')?.invalid && eventForm.get('description')?.touched">
+            <app-validation-message [validationMessage]="'Description is required.'"
+                [showValidationMessage]="eventForm.get('description')?.errors?.['required']">
+            </app-validation-message>
+        </div>
+
+        <!-- Event DateTime -->
+        <div class="form-group">
+            <label for="eventDateTime">Event Date & Time</label>
+            <input type="datetime-local" id="eventDateTime" formControlName="eventDateTime" class="form-control" />
+        </div>
+        <div *ngIf="eventForm.get('eventDateTime')?.invalid && eventForm.get('eventDateTime')?.touched">
+            <!-- Required error message -->
+            <app-validation-message 
+              [validationMessage]="'Date and Time is required.'"
+              [showValidationMessage]="eventForm.get('eventDateTime')?.errors?.['required']">
+            </app-validation-message>
+          
+            <!-- Custom future date validation error message -->
+            <app-validation-message 
+              [validationMessage]="'Event date and time must be in the future.'"
+              [showValidationMessage]="eventForm.get('eventDateTime')?.errors?.['futureDate']">
+            </app-validation-message>
+        </div>
+                  
+        <!-- Event Type -->
+        <div class="form-group">
+            <label for="type">Event Type</label>
+            <select id="type" formControlName="EventType" class="form-control dropdown"
+                [ngClass]="{ 'is-invalid': eventForm.get('EventType')?.invalid && eventForm.get('EventType')?.touched }">
+                <option *ngFor="let types of eventTypes" [value]="types">{{ types }}</option>
+            </select>
+        </div>
+        <div *ngIf="eventForm.get('EventType')?.invalid && eventForm.get('EventType')?.touched">
+            <app-validation-message [validationMessage]="'Event Type is required.'"
+                [showValidationMessage]="eventForm.get('EventType')?.errors?.['required']">
+            </app-validation-message>
+        </div>
+
+        <!-- Participants -->
+        <div formArrayName="participants" class="container">
+            <div *ngFor="let participant of participants.controls; let i = index" [formGroupName]="i" class="row mb-3">
+                <!-- Participant Details -->
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label for="participantEmail{{ i }}" class="form-label">Participant Email</label>
+                        <input
+                            type="email"
+                            formControlName="email"
+                            class="form-control"
+                            id="participantEmail{{ i }}"
+                            (keyup)="fetchUserDetails($event, i)"
+                            placeholder="Enter participant's email"
+                            [attr.aria-describedby]="'participantHelp' + i"
+                        />
+                        <!-- Validation and Error Messages -->
+                        <div *ngIf="errorMessages[i]" class="text-danger mt-1">
+                            <app-validation-message
+                                [validationMessage]="'Email does not exist.'"
+                                [showValidationMessage]="errorMessages[i] === true"
+                            ></app-validation-message>
+                        </div>
+                        <div *ngIf="participant.get('email')?.invalid && participant.get('email')?.touched">
+                            <app-validation-message
+                                [validationMessage]="'Email is required.'"
+                                [showValidationMessage]="participant.get('email')?.errors?.['required']"
+                            ></app-validation-message>
+                            <app-validation-message
+                                [validationMessage]="'Invalid email format.'"
+                                [showValidationMessage]="participant.get('email')?.errors?.['pattern']"
+                            ></app-validation-message>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Image -->
+                <div class="col-lg-2 col-md-2 col-sm-6 d-flex align-items-center">
+                    <div class="profile-image-container text-center" >
+                        <app-admin-loader [isLoading]="isLoading[i]"></app-admin-loader>
+
+                        <img *ngIf="!isLoading[i] ||participantParam[i].profilepic"
+                        [src]="participantParam[i].profilepic || 'assets/defaultProfile.jpg'" 
+                        alt="Profile Image"
+                             class="rounded-circle img-thumbnail"
+                             style="width: 60px; height: 60px;" />
+                             
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="col-lg-2 col-md-2 col-sm-6 d-flex align-items-center justify-content-center">
+                    <button type="button" class="btn btn-danger btn-sm me-2" (click)="removeParticipant(i)">Remove</button>
+                </div>
+            </div>
+
+            <!-- Add Participant Button -->
+            <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-start">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addParticipant()">
+                        <i class="bi bi-person-plus"></i> Add Participant
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success"  >
+            Submit Event
+        </button>
+    </form>
+</div>

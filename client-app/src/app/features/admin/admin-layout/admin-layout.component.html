@@ -1,0 +1,38 @@
+<div class="d-flex admin">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <h2>CoddingWala</h2>
+  <a  [routerLink]="['dashboard']" routerLinkActive="active-link">Home</a>
+  <a [routerLink]="['users']" routerLinkActive="active-link">Users</a>
+  <a [routerLink]="['roles']" routerLinkActive="active-link">Roles & Permissions</a>
+  <a [routerLink]="['event-task']" routerLinkActive="active-link">Task & Events</a>
+  <a href="#">Post</a>
+  <a href="#">Projects</a>
+  <a href="#">Teams</a>
+  <a href="#">Notes</a>
+  <a href="#">Loges</a>
+  <a [routerLink]="['setting']" routerLinkActive="active-link">Settings</a>
+  <a href="#">Reports</a>
+  <a (click)="logout()">Logout</a>
+</div>
+
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content flex-grow-1 ">
+    <div class="header-title d-flex justify-content-between align-items-center">
+        <h4>Code</h4>
+        <div class="navbar-right">
+              <!-- Profile Image -->
+              <!-- <div class="profile-image mb-2">
+                <app-imageshow [imagePath]="currentUser?.profileImageUrl"></app-imageshow>
+              </div> -->
+            <span class="ml-4">Hey, {{currentUser?.firstName}}</span>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+

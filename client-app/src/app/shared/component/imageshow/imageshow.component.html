@@ -1,0 +1,9 @@
+<div class="image-container">
+  <!-- Loader -->
+  <div *ngIf="loading">
+    <app-admin-loader [isLoading]="loading"></app-admin-loader>
+  </div>
+
+  <!-- Image Preview -->
+  <img *ngIf="imagePreview && !loading" [src]="imagePreview" class="dynamic-img" alt="Selected Image" />
+</div>

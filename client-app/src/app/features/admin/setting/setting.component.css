@@ -1,0 +1,25 @@
+/* Metadata */
+.meta-tabs .tab-content .page-sub-head {
+    margin: 0 0 32px 0;
+}
+
+.meta-tabs ul {
+    margin: 0 0 24px 0;
+    display: flex;
+    gap: 24px; /* Modern CSS with flexbox for spacing */
+}
+
+.meta-tabs ul li .nav-link {
+    padding: 17px 0;
+    border: 0 !important;
+    color: #3E4456 !important;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent !important;
+}
+
+.meta-tabs ul li .nav-link.active {
+    border-bottom: 2px solid #3E68FF !important;
+    color: #3E68FF !important;
+}

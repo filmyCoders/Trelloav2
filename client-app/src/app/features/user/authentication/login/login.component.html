@@ -1,0 +1,113 @@
+<div class="container cardsRedius">
+  <div class="row justify-content-center">
+    <div class="col-xl-5 col-lg-6 col-md-5">
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="MiddleLine"></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                </div>
+
+                <form [formGroup]="loginForm" (ngSubmit)="checkLoginform()">
+                  <!-- Email Input -->
+                  <div class="form-group">
+                    <div class="input_box">
+                      <label for="email" class="lablesForm">Email:</label>
+                      <input
+                        id="email"
+                        formControlName="email"
+                        placeholder="Enter Email Address"
+                      />
+                    </div>
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+                      <app-validation-message
+                        [validationMessage]="'Email is required.'"
+                        [showValidationMessage]="loginForm.get('email')?.errors?.['required']"
+                      ></app-validation-message>
+                      <app-validation-message
+                        [validationMessage]="'Email format is incorrect.'"
+                        [showValidationMessage]="loginForm.get('email')?.errors?.['pattern']"
+                      ></app-validation-message>
+                    </div>
+                  </div>
+
+                  <!-- Password Input -->
+                  <div class="form-group">
+                    <div class="input_box">
+                      <label for="password" class="lablesForm">Password:</label>
+                      <div class="d-flex align-items-center">
+                        <input
+                          type="password"
+                          id="password"
+                          formControlName="password"
+                          placeholder="Enter Password"
+                        />
+                      </div>
+                    </div>
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+                      <app-validation-message
+                        [validationMessage]="'Password is required.'"
+                        [showValidationMessage]="loginForm.get('password')?.errors?.['required']"
+                      ></app-validation-message>
+                      <app-validation-message
+                        [validationMessage]="'Password must contain at least one letter, one number, and one special character.'"
+                        [showValidationMessage]="loginForm.get('password')?.errors?.['pattern']"
+                      ></app-validation-message>
+                    </div>
+                  </div>
+
+                  <!-- Remember Me Checkbox -->
+                  <div class="form-group">
+                    <div class="checkbox-container">
+                      <input
+                        type="checkbox"
+                        id="customCheckbox"
+                        formControlName="rememberMe"
+                        class="custom-checkbox"
+                      />
+                      <label for="customCheckbox" class="checkbox-label">Remember Me</label>
+                    </div>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <div class="form-group text-center">
+                    <button
+                      type="submit"
+                      id="submitButton"
+                      class="custom-btn btn-1 btn-block"
+                      [disabled]="loginForm.invalid"
+                    >
+                      <span>Login</span>
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Links -->
+                <div class="text-center mt-3">
+                  <a routerLink="../forgot-password" [routerLinkActive]="'active'">Forgot Password?</a><br />
+                  <a routerLink="../register">Register</a><br />
+                </div>
+
+                <!-- Google Sign Up Button -->
+                <div class="text-center mt-3">
+                  <button class="google-btn" type="button">
+                    <i class="fa-brands fa-google"></i> Sign up with Google
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="MiddleLine"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>         
+  
+  <a routerLink="../google-login" [routerLinkActive]="'active'">Google With Login</a><br />
+  <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
+</div>

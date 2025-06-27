@@ -1,0 +1,163 @@
+<div class="workspace-list">
+  <!-- Add New Workspace Card -->
+  <div 
+    class="workspace-card add-workspace" 
+    (click)="openAddWorkspaceModal()"    
+    tabindex="0"
+  >
+    <div class="workspace-add-icon">+</div>
+    <h3>Create New Workspace</h3>
+  </div>
+
+  <!-- Existing Workspaces -->
+  <div
+    class="workspace-card"
+    *ngFor="let workspace of workspaces; let i = index"
+    (dblclick)="openWorkspace(workspace.workSpaceId)"
+    tabindex="0"
+    (keyup.enter)="openWorkspace(workspace.workSpaceId)"
+  >             
+    <div class="workspace-image" aria-label="Workspace Image">
+      <app-imageshow [imagePath]="workspace.workspaceImage" [type]="1"></app-imageshow>
+    </div>
+    
+
+
+    <div class="workspace-details">
+      <h3 class="workspace-name">{{ workspace.boardName }}</h3>
+      <p class="workspace-date">{{ workspace.createdAt | date: 'medium' }}</p>
+    </div>
+
+
+    <button [routerLink]="['../task/open-workspace2']" [queryParams]="{ id: workspace.workSpaceId }"> Open Workspace </button>
+
+
+
+    <!-- Options Button -->
+    <button class="options-btn" (click)="toggleOptions(i, $event)" aria-label="Options">
+      ⋮
+    </button>
+
+    <!-- Actions Menu -->
+    <div
+      class="options-menu"
+      *ngIf="selectedWorkspaceIndex === i"
+      (click)="stopPropagation($event)"
+    >
+  
+    <button [routerLink]="['../task/open-workspace']" [queryParams]="{ id: workspace.workSpaceId }"> Open Workspace </button>
+      <button (click)="openWorkspaceMember(workspace)">Members </button>
+      <button (click)="openDeleteWorkspaceModal(workspace)">Delete Workspace</button>
+      <button (click)="openUpdateWorkspaceModal(workspace)">Edit</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Workspace Modal -->
+<div class="modal fade pl-modal" tabindex="-1" aria-labelledby="workspaceModalLabel" aria-hidden="true" #addWorkspaceModal>
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="workspaceModalLabel">Create Workspace</h5>
+        <button type="button" class="btn-close" (click)="closeModal('Add')"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addworspaceForm" (keyup.enter)="saveWorkspace()">
+          <div class="mb-3">
+            <label for="boardName" class="form-label">Workspace Name</label>
+            <input type="text" class="form-control" id="boardName" formControlName="workspacesName" required>
+          </div>
+          <div *ngIf="addworspaceForm.get('workspacesName')?.invalid && addworspaceForm.get('workspacesName')?.touched">
+            <app-validation-message 
+              [validationMessage]="'Name is required.'" 
+              [showValidationMessage]="addworspaceForm.get('workspacesName')?.errors?.['required']">
+            </app-validation-message>
+          </div>
+       
+          <div class="mb-3">
+            <label for="workspaceImage" class="form-label">Workspace Image</label>
+            <input type="file" #fileInput class="form-control" id="workspaceImage" (change)="onFileSelected($event)">
+          </div>
+
+        </form>
+        <app-imageshow [file]="selectedFile" [imagePath]="serverImagePath" [type]="1"></app-imageshow>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal('Add')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveWorkspace()" >Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Bootstrap Modal -->
+<div class="modal fade pl-modal" tabindex="-1" aria-labelledby="workspaceModalLabel" aria-hidden="true" #updateWorkspaceModal>
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="workspaceModalLabel">Create Workspace</h5>
+        <button type="button" class="btn-close" (click)="closeModal('Edit')"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" (keyup.enter)="updateWorkspace()">
+          <div class="mb-3">
+            <label for="boardName" class="form-label">Workspace Name</label>
+            <input type="text" class="form-control" id="boardName" formControlName="workspacesName" required>
+          </div>
+          <div *ngIf="editForm.get('workspacesName')?.invalid && editForm.get('workspacesName')?.touched">
+            <app-validation-message 
+              [validationMessage]="'Name is required.'" 
+              [showValidationMessage]="editForm.get('workspacesName')?.errors?.['required']">
+            </app-validation-message>
+          </div>
+       
+          <div class="mb-3">
+            <label for="workspaceImage" class="form-label">Workspace Image</label>
+            <input type="file" class="form-control" id="workspaceImage" (change)="onFileSelected($event)">
+          </div>
+
+        </form>
+        <!-- Image Preview (Only if a new image is selected) -->
+
+<app-imageshow [file]="selectedFile" [imagePath]="serverImagePath" [type]="1"></app-imageshow>
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal('Edit')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="updateWorkspace()" >Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteWorkspaceModal" tabindex="-1" aria-hidden="true" #deleteWorkspaceModel>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Delete Workspace</h5>
+        <button type="button" class="btn-close" (click)="closeModal('Delete')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p >
+          Are you sure you want to delete <b>{{workspaceGet?.boardName}}</b>  workspace permanently? This action <u>cannot</u> be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal('Delete')">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteSubmit()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-workspace-member></app-workspace-member>
+
+<a routerLink="../task/open-workspace"> Members </a>

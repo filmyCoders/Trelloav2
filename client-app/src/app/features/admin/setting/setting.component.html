@@ -1,0 +1,29 @@
+
+<div class="col-lg-10 content-right">
+    <div class="page-content meta-tabs">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" routerLink="profile-details" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                View Profile
+            </button>
+        </li>
+        
+        <li *ngIf="activeLink==false" class="nav-item">
+          <a class="nav-link" routerLink="change-password" routerLinkActive="active">Change Password</a>
+        </li>
+        <li *ngIf="activeLink==true" class="nav-item" >
+          <a class="nav-link" routerLink="reset-password" routerLinkActive="active">Change Password</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" routerLink="change-email" routerLinkActive="active">Change Email</a>
+        </li>
+      </ul>
+  
+      <div class="tab-content">
+        <!-- The tab-pane class is not needed for router-outlet -->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

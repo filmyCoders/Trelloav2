@@ -1,0 +1,124 @@
+.toast-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1050;
+  width: 100%;
+  max-width: 400px; /* Limit the maximum width */
+  padding: 0 10px; /* Add horizontal padding for better spacing */
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-out, fadeOut 0.5s ease-in 3s; /* Adjust animation timing */
+  background-color: #fff; /* Default background color */
+  color: #000; /* Default text color */
+  width: 100%; /* Make toast fill the container width */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.toast-title {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.toast-message {
+  margin: 0;
+}
+
+.toast.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Custom Error Toast Style */
+.toast.error {
+  background-color: #f05965; /* Lighter red for background */
+  color: #e00000; /* Darker red for text */
+}
+
+/* Ensuring that the message text is readable */
+.toast.error .toast-title,
+.toast.error .toast-message {
+  color: #FFFFFF; /* White text for better contrast */
+}
+
+/* Optional: Close button styling for error toast */
+.toast.error .toast-close-button {
+  color: #FFFFFF; /* Keep close button white */
+}
+
+.toast.error .toast-close-button:hover,
+.toast.error .toast-close-button:focus {
+  color: #FFCCCC; /* Lighter shade on hover for visibility */
+}
+
+
+.toast.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.toast.info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .toast-container {
+    right: 5px;
+    top: 5px;
+  }
+
+  .toast {
+    font-size: 0.9rem; /* Slightly smaller font size */
+    padding: 10px; /* Reduced padding */
+  }
+
+  .toast-title {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .toast-message {
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    right: 2px;
+    top: 2px;
+    padding: 0; /* Remove horizontal padding */
+  }
+
+  .toast {
+    font-size: 0.8rem; /* Smaller font size for very small screens */
+    padding: 8px; /* Further reduced padding */
+  }
+
+  .toast-title {
+    font-size: 0.9rem; /* Smaller title font size */
+  }
+
+  .toast-message {
+    font-size: 0.75rem; /* Smaller message font size */
+  }
+}
+
+/* Animation for fading in and out */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+

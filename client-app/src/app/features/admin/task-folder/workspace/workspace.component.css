@@ -1,0 +1,138 @@
+/* General Workspace List Styles */
+.workspace-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fc; /* Slightly lighter background for contrast */
+}
+
+/* Workspace Card */
+.workspace-card {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    padding-bottom: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.workspace-card:hover {
+    outline: 2px solid #3E68FF;
+    color: #3E68FF;
+    transform: translateY(-3px); /* Consistent hover effect */
+}
+
+/* Workspace Image */
+.workspace-image {
+    width: 100%;
+    height: 150px;
+    border-bottom: 2px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.workspace-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Workspace Details */
+.workspace-details {
+    text-align: center;
+    padding: 1rem;
+}
+
+.workspace-name {
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    word-break: break-word;
+}
+
+.workspace-date {
+    font-size: 14px;
+    color: gray;
+}
+
+/* Add Workspace Card */
+.add-workspace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, #e8f0ff, #f4f8ff);
+    color: #3E68FF;
+    font-size: 18px;
+    font-weight: 600;
+    min-height: 180px;
+    border-radius: 10px;
+    border: 2px dashed #3E68FF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    padding: 1rem;
+}
+
+.add-workspace:hover {
+    background: linear-gradient(135deg, #d8e8ff, #e0f0ff);
+    transform: translateY(-3px); /* Consistent with other workspace cards */
+    border-width: 3px; /* Keeps dashed border but enhances visibility */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Click Effect */
+.add-workspace:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Plus Icon */
+.workspace-add-icon {
+    font-size: 50px;
+    font-weight: bold;
+    color: #3E68FF;
+    margin-bottom: 8px;
+    transition: transform 0.2s;
+}
+
+.add-workspace:hover .workspace-add-icon {
+    transform: rotate(90deg);
+}
+
+/* Label */
+.add-workspace-label {
+    font-size: 16px;
+    color: #3E68FF;
+    font-weight: 600;
+}
+/* Workspace Image */
+.workspace-show-image {
+    width: 50%;
+    height: 150px; /* Set a fixed height */
+    border-bottom: 2px solid #e0e0e0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workspace-image img {
+    width: 100%; /* Ensures it takes full width */
+    max-height: 250px; /* Limits height */
+    object-fit: contain; /* Ensures full image is visible */
+    display: block;
+  }
+  .workspace-card {
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+  }

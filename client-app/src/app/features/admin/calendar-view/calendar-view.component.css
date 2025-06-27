@@ -1,0 +1,57 @@
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+}
+
+/* Event Styles */
+.custom-event {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.event-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.event-title {
+  font-size: 14px;
+  color: #212529;
+}
+
+/* Type-Specific Colors */
+.event-type-0 .event-dot {
+  background-color: #6f907a;
+}
+.event-type-1 .event-dot {
+  background-color: #28a745;
+}
+.event-type-2 .event-dot {
+  background-color: #dc3545;
+}
+.calendar-container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+}
